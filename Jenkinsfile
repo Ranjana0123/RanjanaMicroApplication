@@ -1,5 +1,10 @@
 pipeline {
     agent any
+    environment {
+        MAVEN_HOME = tool 'jenkins-maven' // Set this in Jenkins tools config
+        DOCKER_IMAGE = 'docker-image'
+        CONTAINER_NAME = 'docker-container'
+    }
 
     stages {
         stage('Checkout') {
