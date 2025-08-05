@@ -1,13 +1,12 @@
-version: "3.8"
 services:
   user-service:
-    build: ./user-service
+    build: ./UserApp
     container_name: user-service-container
     ports:
       - "8081:8081"
 
   department-service:
-    build: ./department-service
+    build: ./Demo
     container_name: department-service-container
     ports:
       - "8082:8082"
