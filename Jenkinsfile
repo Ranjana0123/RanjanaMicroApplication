@@ -27,8 +27,11 @@ pipeline {
 
         stage('Docker Compose - Up') {
             steps {
-        bat 'docker-compose down'
-        bat 'docker-compose up -d --build'            }
+          bat 'docker rm -f department-service-container || exit 0'
+                bat 'docker rm -f user-service-container || exit 0'
+                bat 'docker-compose down'
+                bat 'docker-compose up -d --build'
+                }
         }
     }
 }
