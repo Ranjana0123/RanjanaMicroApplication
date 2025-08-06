@@ -14,6 +14,15 @@
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
         </processorPath>
+        <module name="department" />
+      </profile>
+      <profile name="Annotation profile for MultiServiceDockerApplication" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar" />
+        </processorPath>
         <module name="userapp" />
       </profile>
     </annotationProcessing>
@@ -21,5 +30,11 @@
       <module name="DepoAPP" target="17" />
       <module name="UserApp" target="17" />
     </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="department" options="-parameters" />
+      <module name="userapp" options="-parameters" />
+    </option>
   </component>
 </project>
