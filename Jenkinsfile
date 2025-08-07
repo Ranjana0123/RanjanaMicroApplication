@@ -24,6 +24,12 @@ pipeline {
                 bat 'docker-compose build'
             }
         }
+        stage('Clean Docker Containers') {
+            steps {
+                bat 'docker container prune -f'
+            }
+        }
+
 
         stage('Docker Compose - Up') {
             steps {
