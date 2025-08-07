@@ -12,43 +12,40 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
-@AllArgsConstructor
 public class UserServiceImpl implements UserService {
+
+    private final UserRepository userRepository;
+    private final WebClient.Builder webClientBuilder;
+    private final String departmentServiceUrl;
+
     @Autowired
-    UserRepository userRepository;
-    @Autowired
-    private WebClient.Builder webClientBuilder;
+    public UserServiceImpl(UserRepository userRepository,
+                           WebClient.Builder webClientBuilder,
+                           @Value("${department.service.url}") String departmentServiceUrl) {
+        this.userRepository = userRepository;
+        this.webClientBuilder = webClientBuilder;
+        this.departmentServiceUrl = departmentServiceUrl;
+    }
 
     public User saveUser(User department) {
         return userRepository.save(department);
     }
-    @Value("${department.service.url}")
-    private String departmentServiceUrl;
-
-    @Autowired
-    public UserServiceImpl(UserRepository userRepository, WebClient.Builder webClientBuilder) {
-        this.userRepository = userRepository;
-        this.webClientBuilder = webClientBuilder;
-    }
-
 
     @Override
     public ResponseDto getUser(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
 
-        ResponseDto responseDto = new ResponseDto();
-        User user = userRepository.findById(id).get();
         UserDto userDto = mapToUser(user);
-       /* ResponseEntity<DepartmentEntity> responseEntity = restTemplate
-                .getForEntity("http://localhost:8080/api/departments/" + user.getDepartmentId(),
-                        DepartmentEntity.class);
-     */
-        //for docker neew to use host.docker.internal in place of localhost
+
         DepartmentDto dept = webClientBuilder.build()
                 .get()
                 .uri(departmentServiceUrl + "/" + user.getDepartmentId())
                 .retrieve()
                 .bodyToMono(DepartmentDto.class)
                 .block();
+
+        ResponseDto responseDto = new ResponseDto();
         responseDto.setUser(userDto);
         responseDto.setDepartment(dept);
         return responseDto;
