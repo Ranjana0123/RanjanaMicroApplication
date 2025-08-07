@@ -7,6 +7,7 @@ import com.microservice.user.entity.UserDto;
 import com.microservice.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -22,6 +23,9 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(department);
     }
 
+    @Value("&{department.service.url}")
+    private String departmentServiceUrl;
+
     @Override
     public ResponseDto getUser(Long id) {
 
@@ -35,7 +39,7 @@ public class UserServiceImpl implements UserService {
         //for docker neew to use host.docker.internal in place of localhost
         DepartmentDto dept = webClientBuilder.build()
                 .get()
-                .uri("http://department-service:8082/api/departments/" + user.getDepartmentId())
+                .uri(departmentServiceUrl + "/" + user.getDepartmentId())
                 .retrieve()
                 .bodyToMono(DepartmentDto.class)
                 .block();

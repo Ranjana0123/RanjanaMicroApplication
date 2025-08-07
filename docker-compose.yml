@@ -4,9 +4,16 @@ services:
     container_name: user-service-container
     ports:
       - "8081:8081"
+    networks:
+      - service-network  # ✅ Fix: remove the extra dash before `networks`
 
   department-service:
     build: ./Demo
     container_name: department-service-container
     ports:
       - "8082:8082"
+    networks:
+      - service-network  # ✅ Fix: same here
+
+networks:
+  service-network:
