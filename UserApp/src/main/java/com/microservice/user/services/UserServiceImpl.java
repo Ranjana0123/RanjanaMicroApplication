@@ -22,9 +22,15 @@ public class UserServiceImpl implements UserService {
     public User saveUser(User department) {
         return userRepository.save(department);
     }
-
-    @Value("&{department.service.url}")
+    @Value("${department.service.url}")
     private String departmentServiceUrl;
+
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository, WebClient.Builder webClientBuilder) {
+        this.userRepository = userRepository;
+        this.webClientBuilder = webClientBuilder;
+    }
+
 
     @Override
     public ResponseDto getUser(Long id) {

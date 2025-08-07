@@ -12,10 +12,8 @@ public class UserApplication {
     public static void main(String[] args) {
         SpringApplication.run(UserApplication.class, args);
     }
-
     @Bean
-    WebClient getRestTemplate() {
-
-        return WebClient.builder().build();
+    public WebClient.Builder webClientBuilder() {
+        return WebClient.builder();
     }
 }
