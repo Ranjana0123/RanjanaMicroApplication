@@ -9,12 +9,13 @@ import org.springframework.web.reactive.function.client.WebClient;
 @SpringBootApplication
 public class UserApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(UserApplication.class, args);
-	}
-@Bean
-WebClient getRestTemplate(){
+    public static void main(String[] args) {
+        SpringApplication.run(UserApplication.class, args);
+    }
 
-		return WebClient.builder().build();
-}
+    @Bean
+    WebClient getRestTemplate() {
+
+        return WebClient.builder().build();
+    }
 }

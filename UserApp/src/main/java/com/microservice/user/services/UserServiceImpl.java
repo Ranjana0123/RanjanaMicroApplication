@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
         //for docker neew to use host.docker.internal in place of localhost
         DepartmentDto dept = webClientBuilder.build()
                 .get()
-                .uri("http://host.docker.internal:8080/api/departments/" + user.getDepartmentId())
+                .uri("http://department-service:8082/api/departments/" + user.getDepartmentId())
                 .retrieve()
                 .bodyToMono(DepartmentDto.class)
                 .block();
