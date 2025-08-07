@@ -15,8 +15,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
-        @Autowired
-        private WebClient.Builder webClientBuilder;
+    @Autowired
+    private WebClient.Builder webClientBuilder;
 
     public User saveUser(User department) {
         return userRepository.save(department);
@@ -25,9 +25,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseDto getUser(Long id) {
 
-    ResponseDto responseDto=new ResponseDto();
-      User user =userRepository.findById(id).get();
-        UserDto userDto =mapToUser(user);
+        ResponseDto responseDto = new ResponseDto();
+        User user = userRepository.findById(id).get();
+        UserDto userDto = mapToUser(user);
        /* ResponseEntity<DepartmentEntity> responseEntity = restTemplate
                 .getForEntity("http://localhost:8080/api/departments/" + user.getDepartmentId(),
                         DepartmentEntity.class);
@@ -41,10 +41,10 @@ public class UserServiceImpl implements UserService {
                 .block();
         responseDto.setUser(userDto);
         responseDto.setDepartment(dept);
-
         return responseDto;
     }
-    private UserDto mapToUser(User user){
+
+    private UserDto mapToUser(User user) {
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
         userDto.setUserAddress(user.getFirstName());
